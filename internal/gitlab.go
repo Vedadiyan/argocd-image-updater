@@ -12,6 +12,7 @@ func Clone(repository string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	tmp = fmt.Sprintf("%s/tmp", tmp)
 	cmd := exec.Command("git", "clone", repository, tmp)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -20,7 +21,7 @@ func Clone(repository string) (string, error) {
 		os.RemoveAll(tmp)
 		return "", err
 	}
-	return fmt.Sprintf("%s/tmp", tmp), nil
+	return tmp, nil
 }
 
 func UpdateImage(path string, key string, tag string) error {
