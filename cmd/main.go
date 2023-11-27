@@ -20,18 +20,22 @@ func main() {
 	keyPath := os.Getenv("CI_IMAGE_KEY")
 	fmt.Println("CI_IMAGE_KEY", keyPath)
 
+	fmt.Println("cloning...")
 	path, err := internal.Clone(repository)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("updating image...")
 	err = internal.UpdateImage(fmt.Sprintf("%s/%s", path, filePath), keyPath, tag)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("commiting ...")
 	err = internal.Commit(path)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("pushing...")
 	err = internal.Push(path, repository, user, token)
 	if err != nil {
 		panic(err)
