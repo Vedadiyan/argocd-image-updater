@@ -30,6 +30,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("staging ...")
+	err = internal.StageAll(path)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println("commiting ...")
 	err = internal.Commit(path)
 	if err != nil {

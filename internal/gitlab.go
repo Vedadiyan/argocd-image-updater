@@ -47,6 +47,14 @@ func UpdateImage(path string, key string, tag string) error {
 	return os.WriteFile(path, marshalledYaml, os.ModePerm)
 }
 
+func StageAll(path string) error {
+	cmd := exec.Command("git", "add", ".")
+	cmd.Dir = path
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
 func Commit(path string) error {
 	cmd := exec.Command("git", "commit", "-m", "\"auto image update\"")
 	cmd.Dir = path
