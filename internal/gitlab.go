@@ -20,7 +20,7 @@ func Clone(repository string) (string, error) {
 		os.RemoveAll(tmp)
 		return "", err
 	}
-	return tmp, nil
+	return fmt.Sprintf("%stmp", tmp), nil
 }
 
 func UpdateImage(path string, key string, tag string) error {
