@@ -30,6 +30,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("set user name and email ...")
+	err = internal.SetUser(user)
+	if err != nil {
+		panic(err)
+	}
+	err = internal.SetEmail(user)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println("staging ...")
 	err = internal.StageAll(path)
 	if err != nil {

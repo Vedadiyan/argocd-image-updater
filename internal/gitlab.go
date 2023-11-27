@@ -47,6 +47,20 @@ func UpdateImage(path string, key string, tag string) error {
 	return os.WriteFile(path, marshalledYaml, os.ModePerm)
 }
 
+func SetUser(user string) error {
+	cmd := exec.Command("git", "config", "--global", "user.name", user)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+func SetEmail(user string) error {
+	cmd := exec.Command("git", "config", "--global", "user.email", user)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
 func StageAll(path string) error {
 	cmd := exec.Command("git", "add", ".")
 	cmd.Dir = path
@@ -65,7 +79,7 @@ func Commit(path string) error {
 
 func Push(path string, repository string, username string, token string) error {
 	url := strings.Split(repository, "@")[1]
-	cmd := exec.Command("git", "push", fmt.Sprintf("https://%s:%s@%s", username, token, url), "master")
+	cmd := exec.Command("git", "push", fmt.Sprintf("https://%s:%s@%s", strings.Replace(username, "@", "%40", 1), token, url), "master")
 	cmd.Dir = path
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
